@@ -17,7 +17,7 @@ class MainPage(BasePage):
         Select(MainPageLocators.city_dropdown()).select_by_visible_text(city)
 
     @classmethod
-    def select_car_model(cls, car_model):
+    def enter_car_model(cls, car_model):
         MainPageLocators.car_model_field().send_keys(car_model)
 
     @classmethod

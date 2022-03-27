@@ -9,6 +9,7 @@ class BasePage:
     @classmethod
     def start_browser(cls):
         cls.driver = webdriver.Chrome(ChromeDriverManager().install())
+        cls.driver.maximize_window()
 
     @classmethod
     def close_browser(cls):

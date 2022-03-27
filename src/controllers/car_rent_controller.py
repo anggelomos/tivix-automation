@@ -1,9 +1,11 @@
 from assertpy import assert_that
 from config import main_page_url
+from faker.generator import random
 from src.data.data_models.rent_data import RentDataModel, LocalizationDataModel, CarDataModel
 from src.pages.base_page import BasePage
 from src.pages.main_page import MainPage
 from src.pages.rent_details_page import RentDetailsPage
+from src.pages.rent_summary_page import RentSummaryPage
 from src.utilities.utilities import Utilities
 
 
@@ -36,7 +38,7 @@ class CarRentController:
         cls.rent_data.localization_data = LocalizationDataModel(country=country, city=city, pickup_date=pickup_date, dropoff_date=dropoff_date)
         MainPage.select_country(country)
         MainPage.select_city(city)
-        MainPage.select_car_model(car_model)
+        MainPage.enter_car_model(car_model)
         MainPage.select_pickup_date(pickup_date)
         MainPage.select_dropoff_date(dropoff_date)
         MainPage.search_car()
@@ -59,3 +61,31 @@ class CarRentController:
         assert_that(RentDetailsPage.get_rent_price_per_day()).is_equal_to(cls.rent_data.car_data.rent_price_per_day)
 
         RentDetailsPage.verify_rent()
+
+    @classmethod
+    def enter_personal_data(cls, name: str = None, last_name: str = None, card_number: int = None, email: str = None):
+
+        if not name:
+            name = Utilities.generate_name()
+
+        if not last_name:
+            last_name = Utilities.generate_last_name()
+
+        if not card_number:
+            card_number = random.randint(999999999, 10000000000)
+
+        if not email:
+            email = Utilities.generate_email()
+
+        RentSummaryPage.enter_name(name)
+        RentSummaryPage.enter_last_name(last_name)
+        RentSummaryPage.enter_card_number(card_number)
+        RentSummaryPage.enter_email(email)
+
+    @classmethod
+    def rent_car(cls):
+        RentSummaryPage.rent_car()
+
+    @classmethod
+    def verify_successful_rent(cls):
+        pass  # TODO: Implement success message verification once it is implemented in the app

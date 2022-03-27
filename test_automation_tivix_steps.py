@@ -38,4 +38,4 @@ def rent_a_car_successfully():
 
 @then("I rent a car successfully")
 def verify_car_rented_successfully():
-    CarRentController.verify_successfull_rent()
+    CarRentController.verify_successful_rent()
