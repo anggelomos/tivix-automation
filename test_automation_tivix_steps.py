@@ -14,7 +14,7 @@ def setup():
 @pytest.fixture(scope="module", autouse=True)
 def teardown():
     yield
-    # BasePage.close_browser()
+    BasePage.close_browser()
 
 
 @scenario('automation_tivix_.feature', 'Rent a car successfully')

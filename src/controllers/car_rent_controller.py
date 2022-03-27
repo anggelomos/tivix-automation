@@ -1,7 +1,9 @@
+from assertpy import assert_that
 from config import main_page_url
 from src.data.data_models.rent_data import RentDataModel, LocalizationDataModel, CarDataModel
 from src.pages.base_page import BasePage
 from src.pages.main_page import MainPage
+from src.pages.rent_details_page import RentDetailsPage
 from src.utilities.utilities import Utilities
 
 
@@ -43,3 +45,17 @@ class CarRentController:
     def select_car(cls):
         car_data = MainPage.select_car()
         cls.rent_data.car_data = CarDataModel(**car_data)
+
+    @classmethod
+    def verify_rent_information(cls):
+        assert_that(RentDetailsPage.get_country()).is_equal_to(cls.rent_data.localization_data.country)
+        assert_that(RentDetailsPage.get_city()).is_equal_to(cls.rent_data.localization_data.city)
+        assert_that(RentDetailsPage.get_pickup_date()).is_equal_to(cls.rent_data.localization_data.pickup_date)
+        assert_that(RentDetailsPage.get_dropoff_date()).is_equal_to(cls.rent_data.localization_data.dropoff_date)
+
+        assert_that(RentDetailsPage.get_rent_company()).is_equal_to(cls.rent_data.car_data.rent_company)
+        assert_that(RentDetailsPage.get_car_model()).is_equal_to(cls.rent_data.car_data.car_model)
+        assert_that(RentDetailsPage.get_license_plate()).is_equal_to(cls.rent_data.car_data.license_plate)
+        assert_that(RentDetailsPage.get_rent_price_per_day()).is_equal_to(cls.rent_data.car_data.rent_price_per_day)
+
+        RentDetailsPage.verify_rent()
