@@ -1,5 +1,6 @@
 import random
 
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from src.data.constants.car_data_fields import CarDataFields
 from src.pages.base_page import BasePage
@@ -35,7 +36,7 @@ class MainPage(BasePage):
     @classmethod
     def select_car(cls):
         car_list = MainPageLocators.car_list()
-        raw_car_web_elements = random.choice(car_list).find_elements_by_tag_name("td")
+        raw_car_web_elements = random.choice(car_list).find_elements(By.TAG_NAME, "td")
 
         raw_car_data = list(map(lambda car_field: car_field.text, raw_car_web_elements))[:-1]
         car_data_fields = list(map(lambda field: field.value, CarDataFields))
