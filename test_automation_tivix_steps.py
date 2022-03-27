@@ -1,5 +1,8 @@
 import pytest
 from pytest_bdd import scenario, given, when, then
+from src.controllers.car_rent_controller import CarRentController
+
+from src.pages.base_page import BasePage
 
 
 @pytest.fixture(scope="module", autouse=True)
@@ -27,8 +30,10 @@ def go_to_main_page():
 @when("I do the process to rent a car")
 def rent_a_car_successfully():
     CarRentController.search_car()
+    CarRentController.select_car()
     CarRentController.verify_rent_information()
     CarRentController.enter_personal_data()
+    CarRentController.rent_car()
 
 
 @then("I rent a car successfully")
