@@ -17,7 +17,7 @@ def teardown():
     BasePage.close_browser()
 
 
-@scenario('automation_tivix_.feature', 'Rent a car successfully')
+@scenario('automation_tivix.feature', 'Rent a car successfully')
 def test_user_with_permissions_tries_to_access_a_resource():
     pass  # pytest-bdd function
 
