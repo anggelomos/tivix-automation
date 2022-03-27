@@ -1,4 +1,7 @@
+import random
+
 from selenium.webdriver.support.select import Select
+from src.data.constants.car_data_fields import CarDataFields
 from src.pages.base_page import BasePage
 from src.pages.locators.main_page_locators import MainPageLocators
 
@@ -28,3 +31,15 @@ class MainPage(BasePage):
     @classmethod
     def search_car(cls):
         MainPageLocators.search_button().click()
+
+    @classmethod
+    def select_car(cls):
+        car_list = MainPageLocators.car_list()
+        raw_car_web_elements = random.choice(car_list).find_elements_by_tag_name("td")
+
+        raw_car_data = list(map(lambda car_field: car_field.text, raw_car_web_elements))[:-1]
+        car_data_fields = list(map(lambda field: field.value, CarDataFields))
+        car_data = dict(zip(car_data_fields, raw_car_data))
+
+        raw_car_web_elements[-1].click()
+        return car_data

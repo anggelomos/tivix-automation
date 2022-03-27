@@ -1,10 +1,13 @@
 from config import main_page_url
+from src.data.data_models.rent_data import RentDataModel, LocalizationDataModel, CarDataModel
 from src.pages.base_page import BasePage
 from src.pages.main_page import MainPage
 from src.utilities.utilities import Utilities
 
 
 class CarRentController:
+
+    rent_data = RentDataModel()
 
     @classmethod
     def go_to_main_page(cls):
@@ -28,9 +31,15 @@ class CarRentController:
         if not dropoff_date:
             dropoff_date = Utilities.get_delayed_date(1)
 
+        cls.rent_data.localization_data = LocalizationDataModel(country=country, city=city, pickup_date=pickup_date, dropoff_date=dropoff_date)
         MainPage.select_country(country)
         MainPage.select_city(city)
         MainPage.select_car_model(car_model)
         MainPage.select_pickup_date(pickup_date)
         MainPage.select_dropoff_date(dropoff_date)
         MainPage.search_car()
+
+    @classmethod
+    def select_car(cls):
+        car_data = MainPage.select_car()
+        cls.rent_data.car_data = CarDataModel(**car_data)

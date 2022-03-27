@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 from src.pages.base_page import BasePage
-from src.pages.locators.locator_decorators import get_element
+from src.pages.locators.locator_decorators import get_element, get_elements
 
 
 class MainPageLocators(BasePage):
@@ -39,3 +39,8 @@ class MainPageLocators(BasePage):
     @get_element
     def rent_button(cls):
         return By.XPATH, "//a[text()='Rent']"
+
+    @classmethod
+    @get_elements
+    def car_list(cls):
+        return By.XPATH, "//table[@id='search-results']/tbody/tr"
